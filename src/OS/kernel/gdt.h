@@ -19,4 +19,14 @@ struct gdt_ptr
 	unsigned int base;
 } __attribute__((packed));
 
+class gdt
+{
+	private:
+/* Our minimal GDT with 3 entries and our GDT pointer */
+		struct gdt_entry gdt[3];
+		struct gdt_ptr gp;
+	public:
+		void gdt_flush();
+};
+
 #endif

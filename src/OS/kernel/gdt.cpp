@@ -1,12 +1,6 @@
 #include "gdt.h"
 
-/* Our minimal GDT with 3 entries and our GDT pointer */
-struct gdt_entry gdt[3];
-struct gdt_ptr gp;
-
-void gdt_flush();
-
-void gdt_flush()
+void gdt::gdt_flush()
 {
 	/* Load GDT pointer (gp) */
 	asm volatile("lgdt %0" : "=m" (gp));

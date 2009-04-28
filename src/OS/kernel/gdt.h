@@ -2,7 +2,7 @@
 #define GDT_H
 
 /* The structure of a GDT entry */
-struct gdt_entry
+struct gdtEntry
 {
 	unsigned short limit_low;
 	unsigned short base_low;
@@ -13,7 +13,7 @@ struct gdt_entry
 } __attribute__((packed));
 
 /* Our pointer to the GDT */
-struct gdt_ptr
+struct gdtPointer
 {
 	unsigned short limit;
 	unsigned int base;
@@ -23,10 +23,11 @@ class gdt
 {
 	private:
 /* Our minimal GDT with 3 entries and our GDT pointer */
-		struct gdt_entry gdt[3];
-		struct gdt_ptr gp;
+		struct gdtEntry globalDescriptorTable[3];
+		//static struct gdtPointer gp;
+		struct gdtPointer gp;
 	public:
-		void gdt_flush();
+		static void flush();
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "gdt.h"
 
-void gdt::gdt_flush()
+void gdt::flush()
 {
 	/* Load GDT pointer (gp) */
 	asm volatile("lgdt %0" : "=m" (gp));

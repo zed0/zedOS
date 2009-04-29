@@ -4,12 +4,12 @@
 /* The structure of a GDT entry */
 struct gdtEntry
 {
-	unsigned short limit_low;
-	unsigned short base_low;
-	unsigned char base_middle;
+	unsigned short limitLow;
+	unsigned short baseLow;
+	unsigned char baseMiddle;
 	unsigned char access;
 	unsigned char granularity;
-	unsigned char base_high;
+	unsigned char baseHigh;
 } __attribute__((packed));
 
 /* Our pointer to the GDT */
@@ -27,7 +27,8 @@ class gdt
 		//static struct gdtPointer gp;
 		struct gdtPointer gp;
 	public:
-		static void flush();
+		void setGate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
+		void flush();
 };
 
 #endif

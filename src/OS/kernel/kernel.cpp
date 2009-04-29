@@ -33,11 +33,14 @@ void kmain(struct multiboot_data* mbd, unsigned int magic )
 	monitor.clear();
 	console terminal(monitor);
 	terminal << "Width = " << terminal.getSizeX() << ", height = " << terminal.getSizeY() << console::endl;
-	for(int i=0; i<5; ++i)
+	for(int i=0; i<10; ++i)
 	{
 		terminal << "Hello World!" << console::endl << console::endl << "Hello on the next line \\o/" << console::endl << "And another" << console::endl;
 	}
 	terminal << "cursorX = " << terminal.getCursorX() << ", cursorY = " << terminal.getCursorY() << console::endl;
+
+	/* Set up the GDT */
+	gdt::init();
 	
 	while(true)
 	{

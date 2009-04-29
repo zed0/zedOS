@@ -31,11 +31,11 @@ void gdt::setGate(int num, unsigned long base, unsigned long limit, unsigned cha
 	globalDescriptorTable[num].access = access;
 }
 
-void gdt::init()
+gdt::gdt()
 {
 	/* Set the gdt pointer and limit */
 	gp.limit = (sizeof(struct gdtEntry) * 3) - 1;
-	gp.base = &gdt;
+	gp.base = int(&globalDescriptorTable);
 
 	/* Our NULL descriptor */
 	setGate(0, 0, 0, 0, 0);

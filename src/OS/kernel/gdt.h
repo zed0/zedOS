@@ -27,6 +27,7 @@ class gdt
 		//static struct gdtPointer gp;
 		struct gdtPointer gp;
 	public:
+		gdt();
 		void setGate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
 		void flush();
 };

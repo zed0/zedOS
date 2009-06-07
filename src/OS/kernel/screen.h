@@ -11,32 +11,32 @@
 class screen
 {
 	private:
-		unsigned char *buffer;
-		unsigned short cursorX;
-		unsigned short cursorY;
+		u8int *buffer;
+		u16int cursorX;
+		u16int cursorY;
 	public:
-		screen(unsigned char *videoram);
+		screen(u8int *videoram);
 		~screen();
 
 /* functions to get information about the screen */
-		unsigned short getSizeX();
-		unsigned short getSizeY();
-		unsigned short getCursorX();
-		unsigned short getCursorY();
-		unsigned char getChar(unsigned short posX, unsigned short posY);
+		u16int getSizeX();
+		u16int getSizeY();
+		u16int getCursorX();
+		u16int getCursorY();
+		u8int getChar(u16int posX, u16int posY);
 
 /* functions to set things on the screen */
-		void setChar(unsigned short posX, unsigned short posY, char character);
-		void setColor(unsigned short posX, unsigned short posY, unsigned short foreColor, unsigned short backColor);
-		void setChar(unsigned short posX, unsigned short posY, char character, unsigned short foreColor, unsigned short backColor);
-		void setCursor(unsigned short posX, unsigned short posY);
+		void setChar(u16int posX, u16int posY, u8int character);
+		void setColor(u16int posX, u16int posY, u16int foreColor, u16int backColor);
+		void setChar(u16int posX, u16int posY, u8int character, u16int foreColor, u16int backColor);
+		void setCursor(u16int posX, u16int posY);
 
 /* shortcut functions to avoid calling above functions repeatedly */
-		void clearToColor(unsigned short foreColor, unsigned short backColor);
+		void clearToColor(u16int foreColor, u16int backColor);
 		void clearColor();
 		void clearChars();
 		void clear();
-		void scroll(unsigned short numRows);
+		void scroll(u16int numRows);
 };
 
 #endif

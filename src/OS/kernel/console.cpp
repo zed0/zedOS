@@ -12,32 +12,32 @@ console::~console()
 {
 }
 
-unsigned short console::getCursorX()
+u16int console::getCursorX()
 {
 	return cursorX;
 }
 
-unsigned short console::getCursorY()
+u16int console::getCursorY()
 {
 	return cursorY;
 }
 
-unsigned short console::getSizeX()
+u16int console::getSizeX()
 {
 	return sizeX;
 }
 
-unsigned short console::getSizeY()
+u16int console::getSizeY()
 {
 	return sizeY;
 }
 
-unsigned char console::getChar(unsigned short posX, unsigned short posY)
+u8int console::getChar(u16int posX, u16int posY)
 {
 	return output.getChar(posX, posY);
 }
 
-void console::put(unsigned char character)
+void console::put(u8int character)
 {
 /* If character is a newline then move the cursor to the start of the next line */
 	if(character == '\n')
@@ -74,7 +74,7 @@ void console::scroll()
 	scroll(1);
 }
 
-void console::scroll(unsigned short numRows)
+void console::scroll(u16int numRows)
 {
 	output.scroll(numRows);
 }

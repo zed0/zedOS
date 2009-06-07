@@ -1,21 +1,23 @@
 #ifndef GDT_H
 #define GDT_H
 
+#include "common.h"
+
 /* The structure of a GDT entry */
 struct gdtEntry
 {
-	unsigned short limitLow;
-	unsigned short baseLow;
-	unsigned char baseMiddle;
-	unsigned char access;
-	unsigned char granularity;
-	unsigned char baseHigh;
+	u16int limitLow;
+	u16int baseLow;
+	u8int baseMiddle;
+	u8int access;
+	u8int granularity;
+	u8int baseHigh;
 } __attribute__((packed));
 
 /* Our pointer to the GDT */
 struct gdtPointer
 {
-	unsigned short limit;
+	u16int limit;
 	unsigned int base;
 } __attribute__((packed));
 
@@ -25,10 +27,10 @@ class gdt
 /* Our minimal GDT with 3 entries and our GDT pointer */
 		struct gdtEntry globalDescriptorTable[3];
 		//static struct gdtPointer gp;
-		struct gdtPointer gp;
+		struct gdtPointer gdtPtr;
 	public:
 		gdt();
-		void setGate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
+		void setGate(u32int num, u32int base, u32int limit, u8int access, u8int gran);
 		void flush();
 };
 

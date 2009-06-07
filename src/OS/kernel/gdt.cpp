@@ -1,21 +1,25 @@
 #include "gdt.h"
 
-void gdt::flush()
+gdt::gdt()
 {
-	/* Load GDT pointer (gp) */
-	asm volatile("lgdt %0" : "=m" (gp));
-	/* Jump to new segment (0x08 in this case) */
-	asm volatile("ljmp $(0x08), $reload_segments");
-	asm volatile("reload_segments:");
-	asm volatile("movl $0x10, %eax");
-	asm volatile("movl %eax, %ds");
-	asm volatile("movl %eax, %es");
-	asm volatile("movl %eax, %fs");
-	asm volatile("movl %eax, %gs");
-	asm volatile("movl %eax, %ss");
+	/* Set the gdt pointer and limit */
+	gdtPtr.limit = (sizeof(struct gdtEntry) * 3) - 1;
+	gdtPtr.base = u32int(&globalDescriptorTable);
+
+	/* Our NULL descriptor */
+	setGate(0, 0, 0, 0, 0);
+
+	/* Our Code Segment. */
+	setGate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
+
+	/* Our Data Segment. */
+	setGate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+
+	/* Flush out the old GDT and install ours */
+	flush();
 }
 
-void gdt::setGate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
+void gdt::setGate(u32int num, u32int base, u32int limit, u8int access, u8int gran)
 {
 	/* Set up the descriptor base address */
 	globalDescriptorTable[num].baseLow = (base & 0xFFFF);
@@ -31,21 +35,17 @@ void gdt::setGate(int num, unsigned long base, unsigned long limit, unsigned cha
 	globalDescriptorTable[num].access = access;
 }
 
-gdt::gdt()
+void gdt::flush()
 {
-	/* Set the gdt pointer and limit */
-	gp.limit = (sizeof(struct gdtEntry) * 3) - 1;
-	gp.base = int(&globalDescriptorTable);
-
-	/* Our NULL descriptor */
-	setGate(0, 0, 0, 0, 0);
-
-	/* Our Code Segment. */
-	setGate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
-
-	/* Our Data Segment. */
-	setGate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
-
-	/* Flush out the old GDT and install ours */
-	flush();
+	/* Load GDT pointer (gdtPtr) */
+	asm volatile("lgdt %0" : "=m" (gdtPtr));
+	/* Jump to new segment (0x08 in this case) */
+	asm volatile("ljmp $(0x08), $reload_segments");
+	asm volatile("reload_segments:");
+	asm volatile("movl $0x10, %eax");
+	asm volatile("movl %eax, %ds");
+	asm volatile("movl %eax, %es");
+	asm volatile("movl %eax, %fs");
+	asm volatile("movl %eax, %gs");
+	asm volatile("movl %eax, %ss");
 }

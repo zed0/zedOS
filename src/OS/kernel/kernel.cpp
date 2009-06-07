@@ -4,7 +4,7 @@
 #include "gdt.h"
 
 /* Somithing to comply with the multiboot specification */
-extern "C" void kmain(struct multiboot_data* mbd, unsigned int magic);
+extern "C" void kmain(struct multiboot_data* mbd, u32int magic);
 
 /* To enable pure virtual functions you need a fallback method: */
 extern "C" void __cxa_pure_virtual()
@@ -15,7 +15,7 @@ extern "C" void __cxa_pure_virtual()
 void *__gxx_personality_v0;
 void *_Unwind_Resume;
 
-void kmain(struct multiboot_data* mbd, unsigned int magic )
+void kmain(struct multiboot_data* mbd, u32int magic )
 {
 	if(magic != 0x2BADB002)
 	{
@@ -27,10 +27,10 @@ void kmain(struct multiboot_data* mbd, unsigned int magic )
 	/* You could either use multiboot.h */
 	/* (http://www.gnu.org/software/grub/manual/multiboot/multiboot.html#multiboot_002eh) */
 	/* or do your offsets yourself. The following is merely an example. */
-	char * boot_loader_name = (char *)mbd + 64;
+	u8int * boot_loader_name = (u8int *)mbd + 64;
 
 	/* Declare our screen (0xB8000 is the start of video ram */
-	screen monitor( (unsigned char*)0xB8000);
+	screen monitor( (u8int*)0xB8000);
 	monitor.clear();
 	console terminal(monitor);
 	terminal << "Width = " << terminal.getSizeX() << ", height = " << terminal.getSizeY() << console::endl;

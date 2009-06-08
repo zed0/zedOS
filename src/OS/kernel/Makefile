@@ -1,9 +1,10 @@
 # A basic Makefile for zed0
 
-SOURCES=kernel.o loader.o common.o screen.o console.o gdt.o idt.o
+SOURCES=kernel.o loader.o common.o screen.o console.o gdt.o idt.o isrs.o
 
 # Flags to compile .c(pp) files with
-CFLAGS=-Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs
+CFLAGS=-Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs -O
+#CFLAGS=-nostdlib -nostartfiles -nodefaultlibs
 # Flags to complie .ld files with
 LDFLAGS=-T linker.ld
 # Flags to compile .s files with

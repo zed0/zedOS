@@ -2,6 +2,8 @@
 #include "screen.h"
 #include "console.h"
 #include "gdt.h"
+#include "idt.h"
+#include "isrs.h"
 
 /* Somithing to comply with the multiboot specification */
 extern "C" void kmain(struct multiboot_data* mbd, u32int magic);
@@ -42,10 +44,13 @@ void kmain(struct multiboot_data* mbd, u32int magic )
 
 	/* Set up the GDT */
 	gdt globalDescriptorTable();
-	
+	idt ourTable();
+	//int test = 0;
+	//terminal << (17/test) << console::endl;
+	asm volatile("int $0x3");
 	while(true)
 	{
-		
+		terminal << "Hello world!" << console::endl;
 	}
 	/* Write your kernel here. */
 	++boot_loader_name;

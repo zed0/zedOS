@@ -1,0 +1,4 @@
+When GRUB boots type:
+kernel 200+20
+boot
+

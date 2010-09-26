@@ -1,4 +1,5 @@
+Requires i586-elf-g++ to compile.  Run make in the src/OS/kernel directory first.
+
 When GRUB boots type:
 kernel 200+20
 boot
-
